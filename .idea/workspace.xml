@@ -2,45 +2,55 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1fe0b353-a949-430c-a477-5802378d2176" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/StaticPagesController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/css/main.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/css/sb-admin-2.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/jquery.easing.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/sb-admin-2.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/scss/_buttons.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/scss/_cards.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/scss/_charts.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/scss/_dropdowns.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/scss/_error.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/scss/_footer.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/scss/_global.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/scss/_login.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/scss/_mixins.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/scss/_navs.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/scss/_utilities.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/scss/_variables.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/scss/navs/_global.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/scss/navs/_sidebar.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/scss/navs/_topbar.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/scss/sb-admin-2.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/scss/utilities/_animation.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/scss/utilities/_background.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/scss/utilities/_border.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/scss/utilities/_display.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/scss/utilities/_progress.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/scss/utilities/_rotate.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/scss/utilities/_text.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/errors/404.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/index.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/layouts/modules/sidebar.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/layouts/modules/topbar.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Billing.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/BillingData.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/BillingController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/BillingDataController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Requests/StoreBilling.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/factories/BillingFactory.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2019_10_16_171207_create_billing_data_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/js/bootstrap-filestyle.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/js/main.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/lang/pl/auth.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/lang/pl/pagination.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/lang/pl/passwords.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/lang/pl/validation.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/auth/login.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/auth/passwords/confirm.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/billings/create.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/billings/index.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/billings/show.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/home.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/layouts/modules/flash-messages.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/layouts/modules/form-errors.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/Feature/BillingsTest.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/SerwuSan.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/SerwuSan.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Exceptions/Handler.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Exceptions/Handler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/welcome.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/ConfirmPasswordController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/ConfirmPasswordController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/ForgotPasswordController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/ResetPasswordController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/VerificationController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/StaticPagesController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/RedirectIfAuthenticated.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/RedirectIfAuthenticated.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/factories/UserFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/UserFactory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_100000_create_password_resets_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2014_10_12_100000_create_password_resets_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_08_19_000000_create_failed_jobs_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_10_13_140800_create_billings_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpunit.xml" beforeDir="false" afterPath="$PROJECT_DIR$/phpunit.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/modules/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/modules/sidebar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/modules/topbar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/modules/topbar.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/ExampleTest.php" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -48,7 +58,7 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution>
       <executable />
@@ -144,6 +154,9 @@
       <path value="$PROJECT_DIR$/vendor/nunomaduro/collision" />
       <path value="$PROJECT_DIR$/vendor/swiftmailer/swiftmailer" />
       <path value="$PROJECT_DIR$/vendor/tijsverkoyen/css-to-inline-styles" />
+      <path value="$PROJECT_DIR$/vendor/maximebf/debugbar" />
+      <path value="$PROJECT_DIR$/vendor/barryvdh/laravel-debugbar" />
+      <path value="$PROJECT_DIR$/vendor/laravel/ui" />
     </include_path>
   </component>
   <component name="ProjectId" id="1S41FZhZ7f29UNSdRH4QHy8T0l1" />
@@ -198,6 +211,13 @@
       <updated>1570807950437</updated>
       <workItem from="1570807951643" duration="7331000" />
       <workItem from="1570886129438" duration="5368000" />
+      <workItem from="1570968972284" duration="5964000" />
+      <workItem from="1571244352035" duration="15503000" />
+      <workItem from="1571327636433" duration="1473000" />
+      <workItem from="1571342818615" duration="2010000" />
+      <workItem from="1571394353816" duration="5529000" />
+      <workItem from="1571488042153" duration="4069000" />
+      <workItem from="1571583746904" duration="7125000" />
     </task>
     <servers />
   </component>

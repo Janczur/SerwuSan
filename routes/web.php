@@ -11,5 +11,15 @@
 |
 */
 
-Route::get('/', 'StaticPagesController@index');
+Auth::routes([
+    'reset' => false, // disabling password reset routes
+    'verify' => false, // disabling email verification routes
+    'register' => false // disabling register routes
+    ]);
+
+Route::get('/', 'HomeController@index')->name('home');
+
+Route::resource('billings', 'BillingController')->middleware('auth');
+
+
 

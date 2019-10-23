@@ -27,4 +27,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
     ];
+
+    public function billings()
+    {
+        return $this->hasMany(Billing::class, 'owner_id');
+    }
 }

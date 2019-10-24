@@ -83,7 +83,7 @@ To test if everything is working properly, just run
 ```sh
 php phpunit
 ```
-in project directory
+in the project directory and make sure everything is green :smile:
 
 <!-- CONTRIBUTING -->
 ## Contributing

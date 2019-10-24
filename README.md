@@ -66,6 +66,14 @@ git clone https://github.com/StBlackJesus/SerwuSan.git
 composer install
 ```
 
+### Testing
+
+To test if everything is working properly, just run
+```sh
+php phpunit
+```
+in project directory
+
 <!-- CONTRIBUTING -->
 ## Contributing
 

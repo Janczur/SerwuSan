@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 class BillingController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->authorizeResource(Billing::class, 'billing');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -50,10 +55,6 @@ class BillingController extends Controller
      */
     public function show(Billing $billing)
     {
-        // @todo Przerobić tego if'a na Politykę
-        if(auth()->id() != $billing->owner_id){
-            abort(403);
-        }
         return view('billings.show', compact('billing'));
     }
 
@@ -88,11 +89,6 @@ class BillingController extends Controller
      */
     public function destroy(Billing $billing)
     {
-        // @todo Przerobić tego if'a na Politykę
-        if(auth()->id() != $billing->owner_id){
-            abort(403);
-        }
-
         if ($billing->delete()){
             return redirect()->route('billings.index')->with('success', __('app.billings.deleted'));
         }

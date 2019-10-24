@@ -28,7 +28,7 @@ class ManageBillingsTest extends TestCase
     /** @test */
     public function a_user_can_create_billing()
     {
-        $this->actingAs(factory(User::class)->create());
+        $this->signIn();
 
         $this->get(route('billings.create'))->assertStatus(200);
         $attributes = [
@@ -47,7 +47,7 @@ class ManageBillingsTest extends TestCase
     /** @test */
     public function a_billing_requires_a_name()
     {
-        $this->actingAs(factory(User::class)->create());
+        $this->signIn();
         $attributes = factory(Billing::class)->raw(['name' => '']);
 
         $this->post(route('billings.store'), $attributes)
@@ -57,7 +57,7 @@ class ManageBillingsTest extends TestCase
     /** @test */
     public function a_billing_requires_a_working_days_rate()
     {
-        $this->actingAs(factory(User::class)->create());
+        $this->signIn();
         $attributes = factory(Billing::class)->raw(['working_days_rate' => '']);
 
         $this->post(route('billings.store'), $attributes)
@@ -67,7 +67,7 @@ class ManageBillingsTest extends TestCase
     /** @test */
     public function a_billing_requires_a_saturday_rate()
     {
-        $this->actingAs(factory(User::class)->create());
+        $this->signIn();
         $attributes = factory(Billing::class)->raw(['saturday_rate' => '']);
 
         $this->post(route('billings.store'), $attributes)
@@ -102,7 +102,7 @@ class ManageBillingsTest extends TestCase
     /** @test */
     public function an_authenticated_user_cannot_view_the_billings_of_others()
     {
-        $this->be(factory(User::class)->create());
+        $this->signIn();
         $billing = factory(Billing::class)->create();
         $this->get(route('billings.show', $billing))
             ->assertStatus(403);
@@ -111,9 +111,19 @@ class ManageBillingsTest extends TestCase
     /** @test */
     public function an_authenticated_user_cannot_destroy_the_billings_of_others()
     {
-        $this->be(factory(User::class)->create());
+        $this->signIn();
         $billing = factory(Billing::class)->create();
         $this->delete(route('billings.destroy', $billing))
             ->assertStatus(403);
+    }
+
+    /** @test */
+    public function an_authenticated_user_can_see_only_his_billings()
+    {
+        $this->actingAs(factory(User::class)->create());
+        $billing = factory(Billing::class)->create();
+
+        $this->get(route('billings.index'))
+            ->assertViewMissing($billing->name);
     }
 }

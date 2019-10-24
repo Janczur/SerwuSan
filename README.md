@@ -65,6 +65,17 @@ git clone https://github.com/StBlackJesus/SerwuSan.git
 ```sh
 composer install
 ```
+3. Connect your database
+rename ".env.example" file to ".env" and porovide valid credentials
+```sh
+DB_DATABASE=your_database_name
+DB_USERNAME=username
+DB_PASSWORD=password
+```
+4. migrate database
+```sh
+php artisan migrate
+```
 
 ### Testing
 

@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 class BillingController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->authorizeResource(Billing::class, 'billing');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -50,10 +55,6 @@ class BillingController extends Controller
      */
     public function show(Billing $billing)
     {
-        // @todo Przerobić tego if'a na Politykę
-        if(auth()->id() != $billing->owner_id){
-            abort(403);
-        }
         return view('billings.show', compact('billing'));
     }
 
@@ -65,19 +66,23 @@ class BillingController extends Controller
      */
     public function edit(Billing $billing)
     {
-        //
+        return view('billings.edit', compact('billing'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Billing $billing
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreBilling $request, Billing $billing)
     {
-        //
+        $validatedData = $request->validated();
+        if ($billing->update($validatedData)){
+            return redirect()->route('billings.index')->with('success', __('app.billings.edited'));
+        }
+        return redirect()->route('billings.index')->with('error', __('app.general.error'));
     }
 
     /**
@@ -88,14 +93,9 @@ class BillingController extends Controller
      */
     public function destroy(Billing $billing)
     {
-        // @todo Przerobić tego if'a na Politykę
-        if(auth()->id() != $billing->owner_id){
-            abort(403);
-        }
-
         if ($billing->delete()){
             return redirect()->route('billings.index')->with('success', __('app.billings.deleted'));
         }
-        return redirect()->route('billings.index')->with('success', __('app.general.error'));
+        return redirect()->route('billings.index')->with('error', __('app.general.error'));
     }
 }

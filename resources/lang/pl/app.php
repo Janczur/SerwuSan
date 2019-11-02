@@ -17,7 +17,8 @@ return [
 
     'billings' => [
         'added' => 'Poprawnie dodano billing do bazy',
-        'deleted' => 'Popranie usunięto billing z bazy'
+        'deleted' => 'Popranie usunięto billing z bazy',
+        'edited' => 'Edycja wybranego billingu przebiegła pomyślnie'
     ]
 
 ];

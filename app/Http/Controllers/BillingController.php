@@ -66,19 +66,23 @@ class BillingController extends Controller
      */
     public function edit(Billing $billing)
     {
-        //
+        return view('billings.edit', compact('billing'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Billing $billing
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreBilling $request, Billing $billing)
     {
-        //
+        $validatedData = $request->validated();
+        if ($billing->update($validatedData)){
+            return redirect()->route('billings.index')->with('success', __('app.billings.edited'));
+        }
+        return redirect()->route('billings.index')->with('error', __('app.general.error'));
     }
 
     /**
@@ -92,6 +96,6 @@ class BillingController extends Controller
         if ($billing->delete()){
             return redirect()->route('billings.index')->with('success', __('app.billings.deleted'));
         }
-        return redirect()->route('billings.index')->with('success', __('app.general.error'));
+        return redirect()->route('billings.index')->with('error', __('app.general.error'));
     }
 }

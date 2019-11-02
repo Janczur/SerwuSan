@@ -8,7 +8,7 @@
                     <div class="card-header py-3">
                         <div class="d-sm-flex align-items-center justify-content-between">
                             <h6 class="m-0 font-weight-bold text-primary">Lista billingów</h6>
-                            <a href="{{ route('billings.create') }}" class="d-none d-sm-inline-block btn btn-sm bg-gradient-success btn-success shadow-sm"><i class="fas fa-plus fa-sm text-white-50"></i> Dodaj billing</a>
+                            <a href="{{ route('billings.create') }}" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fas fa-plus fa-sm text-white-50"></i> Dodaj billing</a>
                         </div>
                     </div>
                     <div class="card-body">
@@ -35,7 +35,7 @@
                                         <form method="POST" action="{{ route('billings.destroy', $billing) }}">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger bg-gradient-danger">Usuń</button>
+                                            <button type="submit" class="btn btn-sm btn-danger">Usuń</button>
                                         </form>
                                     </td>
                                 </tr>

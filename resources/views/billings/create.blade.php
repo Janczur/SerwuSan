@@ -57,8 +57,13 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <input type="file" class="form-control" name="importFile" aria-describedby="importFileDescription">
-                                <small id="importFileDescription" class="form-text text-muted">Dozwolone rozszerzenia plików: <strong>*.csv</strong></small>
+                                <input type="file" class="form-control @error('import_file') is-invalid @enderror" name="import_file" aria-describedby="import_fileDescription">
+                                @error('import_file')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                                <small id="import_fileDescription" class="form-text text-muted">Dozwolone rozszerzenia plików: <strong>*.csv</strong></small>
                             </div>
                             <button class="btn btn-success btn-icon-split" type="submit">
                                 <span class="icon text-white-50">

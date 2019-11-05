@@ -12,4 +12,9 @@ class Billing extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function billingData()
+    {
+        return $this->hasMany(BillingData::class);
+    }
 }

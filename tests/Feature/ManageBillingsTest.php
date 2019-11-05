@@ -6,6 +6,9 @@ use App\Billing;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Facades\Tests\Setup\BillingFactory;
+use Illuminate\Http\UploadedFile;
+use Tests\Setup\BillingFileRepository;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class ManageBillingsTest extends TestCase
@@ -31,17 +34,22 @@ class ManageBillingsTest extends TestCase
     public function a_user_can_create_billing()
     {
         $this->signIn();
-
         $this->get(route('billings.create'))->assertStatus(200);
+
+        $file = UploadedFile::fake()->create('billing.csv');
+
         $attributes = [
             'name' => $this->faker->sentence(4),
             'working_days_rate' => $this->faker->randomFloat(4, 0, 1),
             'saturday_rate' => $this->faker->randomFloat(4, 0, 1),
+            'import_file' => $file
         ];
 
         $this->post(route('billings.store'), $attributes)
             ->assertRedirect(route('billings.index'))
             ->assertSessionHas('success');
+
+        unset($attributes['import_file']);
         $this->assertDatabaseHas('billings', $attributes);
     }
 
@@ -76,7 +84,7 @@ class ManageBillingsTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_view_their_billing()
+    public function an_authenticated_user_can_view_his_billing()
     {
         $billing = BillingFactory::create();
 
@@ -88,19 +96,21 @@ class ManageBillingsTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_update_their_billing()
+    public function an_authenticated_user_can_update_his_billing()
     {
-        $this->withExceptionHandling();
         $billing = BillingFactory::create();
 
         $this->actingAs($billing->owner)
             ->get(route('billings.edit', $billing))
             ->assertSee($billing->name);
 
+        $file = UploadedFile::fake()->create('billing.csv');
+
         $attributes = [
             'name' => $this->faker->sentence(4),
             'working_days_rate' => $this->faker->randomFloat(4, 0, 1),
             'saturday_rate' => $this->faker->randomFloat(4, 0, 1),
+            'import_file' => $file
         ];
 
         $this->actingAs($billing->owner)
@@ -108,12 +118,13 @@ class ManageBillingsTest extends TestCase
             ->assertRedirect(route('billings.index'))
             ->assertSessionHas('success');
 
+        unset($attributes['import_file']);
         $this->assertDatabaseHas('billings', $attributes);
     }
 
 
     /** @test */
-    public function a_user_can_delete_their_billing()
+    public function an_authenticated_user_can_delete_their_billing()
     {
         $billing = BillingFactory::create();
 

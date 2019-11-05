@@ -27,6 +27,7 @@ class StoreBilling extends FormRequest
             'name' => 'required|string|min:3|max:255',
             'working_days_rate' => 'required|numeric|min:0|max:1',
             'saturday_rate' => 'required|numeric|min:0|max:1',
+            'import_file' => 'required|file|mimes:txt,csv'
         ];
     }
 
@@ -35,7 +36,8 @@ class StoreBilling extends FormRequest
         return [
             'name' => 'Nazwa billingu',
             'working_days_rate' => 'Opłata za dni robocze',
-            'saturday_rate' => 'Opłata za sobotę'
+            'saturday_rate' => 'Opłata za sobotę',
+            'import_file' => 'Importowany plik',
         ];
     }
 }

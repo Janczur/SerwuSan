@@ -4,26 +4,34 @@ namespace App\Http\Controllers;
 
 use App\Billing;
 use App\Http\Requests\StoreBilling;
-use App\Imports\BillingDataImport;
+use App\Imports\BillingDataImporter;
+use App\Repositories\BillingRepository;
 use Illuminate\Http\Response;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use PhpOffice\PhpSpreadsheet\Reader\Exception;
 
 class BillingController extends Controller
 {
 
     /**
-     * @var BillingDataImport $billingDataImport
+     * @var BillingDataImporter $billingDataImporter
      */
-    private $billingDataImport;
+    private $billingDataImporter;
+
+    /**
+     * @var BillingRepository $billing
+     */
+    private $billing;
 
     /**
      * BillingController constructor.
-     * @param BillingDataImport $billingDataImport
+     * @param BillingDataImporter $billingDataImporter
      */
-    public function __construct(BillingDataImport $billingDataImport)
+    public function __construct(BillingDataImporter $billingDataImporter, BillingRepository $billing)
     {
-        $this->billingDataImport = $billingDataImport;
+        $this->billingDataImporter = $billingDataImporter;
+        $this->billing = $billing;
         $this->authorizeResource(Billing::class, 'billing');
     }
 
@@ -49,18 +57,24 @@ class BillingController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created billing in database.
      *
-     * @param  StoreBilling  $request
+     * @param StoreBilling $request
      * @return RedirectResponse
      */
     public function store(StoreBilling $request): RedirectResponse
     {
+        /** @var Billing $billing */
         $billing = auth()->user()->billings()->create($request->validated());
+        try {
+            $this->billingDataImporter->setBillingData($billing, $request->import_file);
+        } catch (Exception $e) {
+            return redirect()->route('billings.index')->with('error', __('app.general.error'));
+        } catch (\PhpOffice\PhpSpreadsheet\Exception $e) {
+            return redirect()->route('billings.index')->with('error', __('app.import.error'));
+        }
+        $this->billing->save($billing);
 
-        $billingDataToImport = $this->billingDataImport->getBillingDataToImport($billing->id, $request->import_file);
-
-        $billing->billingData()->insert($billingDataToImport);
         return redirect()->route('billings.index')->with('success', __('app.billings.added'));
     }
 

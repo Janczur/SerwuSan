@@ -2,24 +2,42 @@
 
 namespace App\Imports;
 
+use App\Billing;
 use Illuminate\Http\UploadedFile;
-use PhpOffice\PhpSpreadsheet\Reader\Csv;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 use App\Imports\Filters\BillingDataReadFilter;
 use Carbon\Carbon;
+use PhpOffice\PhpSpreadsheet\Reader\IReader;
 
-class BillingDataImport
+class BillingDataImporter
 {
     /**
-     * @param int $billing_id
+     * @param Billing $billing
+     * @param UploadedFile $file
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
+     */
+    public function setBillingData(Billing $billing, UploadedFile $file): void
+    {
+        // @todo Testy na całą klasę
+        $billingData = $this->getBillingDataToImport($billing, $file);
+        /** @var Billing $billing */
+        $billing->setRawData($billingData);
+    }
+
+    /**
+     * @param Billing $billing
      * @param UploadedFile $file
      * @return array $preparedBillingData
+     * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
-    public function getBillingDataToImport($billing_id, $file): array
+    private function getBillingDataToImport($billing, $file): array
     {
         $filter = $this->getReadFilter();
-        $reader = $this->setupReaderWithFilter($filter);
+        $reader = $this->setupReaderWithFilter($filter, 'Csv');
         $loadedBillingData = $this->loadBillingDataToArray($reader, $file);
-        $preparedBillingData = $this->prepareBillingData($billing_id, $loadedBillingData);
+        $preparedBillingData = $this->prepareBillingData($billing->id, $loadedBillingData);
         return $preparedBillingData;
     }
 
@@ -34,11 +52,13 @@ class BillingDataImport
 
     /**
      * @param BillingDataReadFilter $filter
-     * @return Csv $reader
+     * @param string $fileType
+     * @return IReader
+     * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
      */
-    private function setupReaderWithFilter($filter): Csv
+    private function setupReaderWithFilter(BillingDataReadFilter $filter, string $fileType): IReader
     {
-        $reader = new Csv();
+        $reader = IOFactory::createReader($fileType);
         $reader->setReadDataOnly(true)
             ->setReadFilter($filter)
             ->setDelimiter("\t");
@@ -47,11 +67,12 @@ class BillingDataImport
     }
 
     /**
-     * @param Csv $reader
+     * @param IReader $reader
      * @param UploadedFile $file
      * @return array $billingData
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
-    private function loadBillingDataToArray($reader, $file): array
+    private function loadBillingDataToArray(IReader $reader, UploadedFile $file): array
     {
         $spreadsheet = $reader->load($file->getPathname());
         return $spreadsheet->getActiveSheet()->toArray();
@@ -64,7 +85,7 @@ class BillingDataImport
      * @param array $billingData
      * @return array $preparedBilling
      */
-    private function prepareBillingData($billing_id, $billingData): array
+    private function prepareBillingData(int $billing_id, array $billingData): array
     {
         $preparedBilling = [];
         unset($billingData[0]); // drop headings

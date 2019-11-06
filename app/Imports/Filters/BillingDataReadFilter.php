@@ -30,9 +30,6 @@ class BillingDataReadFilter implements IReadFilter
      */
     public function readCell($column, $row, $worksheetName = ''): bool
     {
-        if (in_array($column, $this->columns, true)){
-            return true;
-        }
-        return false;
+        return in_array($column, $this->columns, true);
     }
 }

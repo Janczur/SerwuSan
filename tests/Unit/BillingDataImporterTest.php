@@ -12,7 +12,7 @@ class BillingDataImporterTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @var int last call duration value from storage/app/tests/billing-test.csv file */
+    /** @var int last call duration value from storage/app/public/billing-test.csv file */
     private const LAST_CALL_DURATION_VALUE = 203;
 
     /** @test */

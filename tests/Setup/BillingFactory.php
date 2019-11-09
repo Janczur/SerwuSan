@@ -1,17 +1,16 @@
 <?php
 
-
 namespace Tests\Setup;
-
 
 use App\Billing;
 
 class BillingFactory
 {
-    public function create()
+    /**
+     * @return Billing
+     */
+    public function create(): Billing
     {
-        $billing = factory(Billing::class)->create();
-
-        return $billing;
+        return factory(Billing::class)->create();
     }
 }

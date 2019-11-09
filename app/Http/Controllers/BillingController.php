@@ -65,6 +65,7 @@ class BillingController extends Controller
     {
         /** @var Billing $billing */
         $billing = auth()->user()->billings()->create($request->validated());
+
         try {
             $this->billingDataImporter->setBillingData($billing, $request->import_file);
         } catch (\PhpOffice\PhpSpreadsheet\Reader\Exception $e) {
@@ -72,6 +73,7 @@ class BillingController extends Controller
         } catch (\PhpOffice\PhpSpreadsheet\Exception $e) {
             return redirect()->route('billings.index')->with('error', __('app.import.spreadsheetError'));
         }
+
         $this->billing->saveBillingData($billing);
 
         return redirect()->route('billings.index')->with('success', __('app.billings.added'));

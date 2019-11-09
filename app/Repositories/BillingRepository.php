@@ -13,7 +13,7 @@ class BillingRepository
      * @param $billing
      * @return Collection
      */
-    public function save($billing): Collection
+    public function saveBillingData($billing): Collection
     {
         /** @var  Billing $billing */
         $rawData = $billing->getRawData();

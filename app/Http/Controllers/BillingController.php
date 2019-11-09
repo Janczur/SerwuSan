@@ -6,10 +6,8 @@ use App\Billing;
 use App\Http\Requests\StoreBilling;
 use App\Imports\BillingDataImporter;
 use App\Repositories\BillingRepository;
-use Illuminate\Http\Response;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
-use PhpOffice\PhpSpreadsheet\Reader\Exception;
 
 class BillingController extends Controller
 {
@@ -27,6 +25,7 @@ class BillingController extends Controller
     /**
      * BillingController constructor.
      * @param BillingDataImporter $billingDataImporter
+     * @param BillingRepository $billing
      */
     public function __construct(BillingDataImporter $billingDataImporter, BillingRepository $billing)
     {
@@ -68,12 +67,12 @@ class BillingController extends Controller
         $billing = auth()->user()->billings()->create($request->validated());
         try {
             $this->billingDataImporter->setBillingData($billing, $request->import_file);
-        } catch (Exception $e) {
-            return redirect()->route('billings.index')->with('error', __('app.general.error'));
+        } catch (\PhpOffice\PhpSpreadsheet\Reader\Exception $e) {
+            return redirect()->route('billings.index')->with('error', __('app.import.readerError'));
         } catch (\PhpOffice\PhpSpreadsheet\Exception $e) {
-            return redirect()->route('billings.index')->with('error', __('app.import.error'));
+            return redirect()->route('billings.index')->with('error', __('app.import.spreadsheetError'));
         }
-        $this->billing->save($billing);
+        $this->billing->saveBillingData($billing);
 
         return redirect()->route('billings.index')->with('success', __('app.billings.added'));
     }

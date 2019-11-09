@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBillingDataTable extends Migration
+class CreateBillingsDataTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateBillingDataTable extends Migration
      */
     public function up()
     {
-        Schema::create('billing_data', function (Blueprint $table) {
+        Schema::create('billings_data', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('billing_id');
+            $table->unsignedInteger('billing_id');
             $table->timestamp('call_start_date');
             $table->smallInteger('call_duration');
-            $table->timestamps();
+
+            $table->foreign('billing_id')->references('id')->on('billings')->onDelete('cascade');
         });
     }
 
@@ -29,6 +30,6 @@ class CreateBillingDataTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('billing_data');
+        Schema::dropIfExists('billings_data');
     }
 }

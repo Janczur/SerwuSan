@@ -7,8 +7,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Facades\Tests\Setup\BillingFactory;
 use Illuminate\Http\UploadedFile;
-use Tests\Setup\BillingFileRepository;
-use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class ManageBillingsTest extends TestCase
@@ -16,7 +14,7 @@ class ManageBillingsTest extends TestCase
     use WithFaker, RefreshDatabase;
 
     /** @test */
-    public function guest_cannot_manage_billings()
+    public function guest_cannot_manage_billings(): void
     {
         $billing = BillingFactory::create();
 
@@ -31,12 +29,11 @@ class ManageBillingsTest extends TestCase
 
 
     /** @test */
-    public function a_user_can_create_billing()
+    public function a_user_can_create_billing(): void
     {
         $this->signIn();
         $this->get(route('billings.create'))->assertStatus(200);
-
-        $file = UploadedFile::fake()->create('billing.csv');
+        $file = $this->getTestFile();
 
         $attributes = [
             'name' => $this->faker->sentence(4),
@@ -54,7 +51,7 @@ class ManageBillingsTest extends TestCase
     }
 
     /** @test */
-    public function a_billing_requires_a_name()
+    public function a_billing_requires_a_name(): void
     {
         $this->signIn();
         $attributes = factory(Billing::class)->raw(['name' => '']);
@@ -64,7 +61,7 @@ class ManageBillingsTest extends TestCase
     }
 
     /** @test */
-    public function a_billing_requires_a_working_days_rate()
+    public function a_billing_requires_a_working_days_rate(): void
     {
         $this->signIn();
         $attributes = factory(Billing::class)->raw(['working_days_rate' => '']);
@@ -74,7 +71,7 @@ class ManageBillingsTest extends TestCase
     }
 
     /** @test */
-    public function a_billing_requires_a_saturday_rate()
+    public function a_billing_requires_a_saturday_rate(): void
     {
         $this->signIn();
         $attributes = factory(Billing::class)->raw(['saturday_rate' => '']);
@@ -84,7 +81,7 @@ class ManageBillingsTest extends TestCase
     }
 
     /** @test */
-    public function an_authenticated_user_can_view_his_billing()
+    public function an_authenticated_user_can_view_his_billing(): void
     {
         $billing = BillingFactory::create();
 
@@ -96,7 +93,7 @@ class ManageBillingsTest extends TestCase
     }
 
     /** @test */
-    public function an_authenticated_user_can_update_his_billing()
+    public function an_authenticated_user_can_update_his_billing(): void
     {
         $billing = BillingFactory::create();
 
@@ -104,13 +101,10 @@ class ManageBillingsTest extends TestCase
             ->get(route('billings.edit', $billing))
             ->assertSee($billing->name);
 
-        $file = UploadedFile::fake()->create('billing.csv');
-
         $attributes = [
             'name' => $this->faker->sentence(4),
             'working_days_rate' => $this->faker->randomFloat(4, 0, 1),
             'saturday_rate' => $this->faker->randomFloat(4, 0, 1),
-            'import_file' => $file
         ];
 
         $this->actingAs($billing->owner)
@@ -118,13 +112,12 @@ class ManageBillingsTest extends TestCase
             ->assertRedirect(route('billings.index'))
             ->assertSessionHas('success');
 
-        unset($attributes['import_file']);
         $this->assertDatabaseHas('billings', $attributes);
     }
 
 
     /** @test */
-    public function an_authenticated_user_can_delete_their_billing()
+    public function an_authenticated_user_can_delete_their_billing(): void
     {
         $billing = BillingFactory::create();
 
@@ -137,7 +130,7 @@ class ManageBillingsTest extends TestCase
     }
 
     /** @test */
-    public function an_authenticated_user_cannot_view_the_billings_of_others()
+    public function an_authenticated_user_cannot_view_the_billings_of_others(): void
     {
         $this->signIn();
         $billing = BillingFactory::create();
@@ -146,7 +139,7 @@ class ManageBillingsTest extends TestCase
     }
 
     /** @test */
-    public function an_authenticated_user_cannot_destroy_the_billings_of_others()
+    public function an_authenticated_user_cannot_destroy_the_billings_of_others(): void
     {
         $this->signIn();
         $billing = BillingFactory::create();
@@ -155,7 +148,7 @@ class ManageBillingsTest extends TestCase
     }
 
     /** @test */
-    public function an_authenticated_user_can_see_only_his_billings()
+    public function an_authenticated_user_can_see_only_his_billings(): void
     {
         $this->signIn();
         $billing = BillingFactory::create();

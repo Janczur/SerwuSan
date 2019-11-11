@@ -9,14 +9,42 @@ use Illuminate\Database\Eloquent\Collection;
 
 class BillingRepository
 {
+    /** @var Billing */
+    private $billing;
+
     /**
-     * @param $billing
+     * BillingRepository constructor.
+     * @param Billing $billing
+     */
+    public function __construct(Billing $billing)
+    {
+        $this->billing = $billing;
+    }
+
+
+    /**
+     * @param Billing $billing
      * @return Collection
      */
-    public function saveBillingData($billing): Collection
+    public function saveBillingData(Billing $billing): Collection
     {
         /** @var  Billing $billing */
         $rawData = $billing->getRawData();
         return $billing->billingData()->createMany($rawData);
+    }
+
+    /**
+     * @param Billing $billing
+     * @param int $number
+     * @return Collection
+     */
+    public function getBillingData(Billing $billing, $number): Collection
+    {
+        return $billing->billingData()->limit($number)->get();
+    }
+
+    public function countAll()
+    {
+        return $this->billing->get()->count();
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Billing;
 use App\Http\Requests\StoreBilling;
+use App\Http\Requests\UpdateBilling;
 use App\Imports\BillingDataImporter;
 use App\Repositories\BillingRepository;
 use Illuminate\Http\RedirectResponse;
@@ -24,13 +25,13 @@ class BillingController extends Controller
 
     /**
      * BillingController constructor.
-     * @param BillingDataImporter $billingDataImporter
      * @param BillingRepository $billing
+     * @param BillingDataImporter $billingDataImporter
      */
-    public function __construct(BillingDataImporter $billingDataImporter, BillingRepository $billing)
+    public function __construct(BillingRepository $billing, BillingDataImporter $billingDataImporter)
     {
-        $this->billingDataImporter = $billingDataImporter;
         $this->billing = $billing;
+        $this->billingDataImporter = $billingDataImporter;
         $this->authorizeResource(Billing::class, 'billing');
     }
 
@@ -87,7 +88,8 @@ class BillingController extends Controller
      */
     public function show(Billing $billing): View
     {
-        return view('billings.show', compact('billing'));
+        $billingData = $this->billing->getBillingData($billing, 10);
+        return view('billings.show', compact('billing', 'billingData'));
     }
 
     /**
@@ -104,11 +106,11 @@ class BillingController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  StoreBilling  $request
+     * @param  UpdateBilling  $request
      * @param  Billing $billing
      * @return RedirectResponse
      */
-    public function update(StoreBilling $request, Billing $billing): RedirectResponse
+    public function update(UpdateBilling $request, Billing $billing): RedirectResponse
     {
         $validatedData = $request->validated();
         if ($billing->update($validatedData)){

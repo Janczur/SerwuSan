@@ -58,10 +58,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <input type="file" class="form-control" name="importFile" aria-describedby="importFileDescription">
-                                <small id="importFileDescription" class="form-text text-muted">Dozwolone rozszerzenia plików: <strong>*.csv</strong></small>
-                            </div>
                             <button class="btn btn-success btn-icon-split" type="submit">
                                 <span class="icon text-white-50">
                                   <i class="fas fa-file-upload"></i>

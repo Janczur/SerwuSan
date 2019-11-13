@@ -7,7 +7,9 @@ use App\Http\Requests\StoreBilling;
 use App\Http\Requests\UpdateBilling;
 use App\Imports\BillingDataImporter;
 use App\Repositories\BillingRepository;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class BillingController extends Controller
@@ -124,6 +126,7 @@ class BillingController extends Controller
      *
      * @param Billing $billing
      * @return RedirectResponse
+     * @throws \Exception
      */
     public function destroy(Billing $billing): RedirectResponse
     {
@@ -131,5 +134,23 @@ class BillingController extends Controller
             return redirect()->route('billings.index')->with('success', __('app.billings.deleted'));
         }
         return redirect()->route('billings.index')->with('error', __('app.general.error'));
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function calculateSettlement(Request $request): JsonResponse
+    {
+        /** @var Billing $billing */
+        $billing = Billing::findOrFail($request->billing_id);
+        $settlement = $billing->calculateSettlement();
+        if ($billing->update(['settlement' => $settlement])){
+            return response()->json([
+                'settlement' => $settlement,
+                'calculated' => true
+            ]);
+        }
+        return response()->json(['calculated' => false]);
     }
 }

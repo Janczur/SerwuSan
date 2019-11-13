@@ -38,7 +38,7 @@ class ManageBillingsTest extends TestCase
         $attributes = [
             'name' => $this->faker->sentence(4),
             'working_days_rate' => $this->faker->randomFloat(4, 0, 1),
-            'saturday_rate' => $this->faker->randomFloat(4, 0, 1),
+            'weekend_rate' => $this->faker->randomFloat(4, 0, 1),
             'import_file' => $file
         ];
 
@@ -71,13 +71,13 @@ class ManageBillingsTest extends TestCase
     }
 
     /** @test */
-    public function a_billing_requires_a_saturday_rate(): void
+    public function a_billing_requires_a_weekend_rate(): void
     {
         $this->signIn();
-        $attributes = factory(Billing::class)->raw(['saturday_rate' => '']);
+        $attributes = factory(Billing::class)->raw(['weekend_rate' => '']);
 
         $this->post(route('billings.store'), $attributes)
-            ->assertSessionHasErrors('saturday_rate');
+            ->assertSessionHasErrors('weekend_rate');
     }
 
     /** @test */
@@ -89,7 +89,7 @@ class ManageBillingsTest extends TestCase
             ->get(route('billings.show', $billing))
             ->assertSee($billing->name)
             ->assertSee($billing->working_days_rate)
-            ->assertSee($billing->saturday_rate);
+            ->assertSee($billing->weekend_rate);
     }
 
     /** @test */
@@ -104,7 +104,7 @@ class ManageBillingsTest extends TestCase
         $attributes = [
             'name' => $this->faker->sentence(4),
             'working_days_rate' => $this->faker->randomFloat(4, 0, 1),
-            'saturday_rate' => $this->faker->randomFloat(4, 0, 1),
+            'weekend_rate' => $this->faker->randomFloat(4, 0, 1),
         ];
 
         $this->actingAs($billing->owner)
@@ -155,5 +155,22 @@ class ManageBillingsTest extends TestCase
 
         $this->get(route('billings.index'))
             ->assertViewMissing($billing->name);
+    }
+
+    /** @test */
+    public function an_authenticated_user_can_calculate_settlement_of_his_billing(): void
+    {
+        $billing = BillingFactory::create();
+
+        $this->actingAs($billing->owner)
+            ->get(route('billings.index'))
+            ->assertSee('Przelicz');
+
+        $attributes = ['billing_id' => $billing->id];
+        $response = $this->json('POST', route('billings.calculate.settlement'), $attributes);
+
+        $response->assertJson([
+            'calculated' => true
+        ]);
     }
 }

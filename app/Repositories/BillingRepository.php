@@ -21,7 +21,6 @@ class BillingRepository
         $this->billing = $billing;
     }
 
-
     /**
      * @param Billing $billing
      * @return Collection
@@ -43,7 +42,10 @@ class BillingRepository
         return $billing->billingData()->limit($number)->get();
     }
 
-    public function countAll()
+    /**
+     * @return int
+     */
+    public function countAll(): int
     {
         return $this->billing->get()->count();
     }

@@ -18,7 +18,8 @@ class CreateBillingsTable extends Migration
             $table->unsignedInteger('owner_id');
             $table->string('name');
             $table->decimal('working_days_rate', 5, 5);
-            $table->decimal('saturday_rate', 5, 5);
+            $table->decimal('weekend_rate', 5, 5);
+            $table->decimal('settlement', 8, 2)->nullable();
             $table->timestamps();
 
             $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');

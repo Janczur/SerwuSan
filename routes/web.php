@@ -21,6 +21,7 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('/', 'HomeController@index')->name('home');
 
     Route::resource('billings', 'BillingController');
+    Route::post('billings/calculate/settlement', 'BillingController@calculatesettlement')->name('billings.calculate.settlement');
 });
 
 

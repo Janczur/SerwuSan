@@ -6,11 +6,15 @@ use App\Billing;
 use App\Http\Requests\StoreBilling;
 use App\Http\Requests\UpdateBilling;
 use App\Imports\BillingDataImporter;
+use App\Jobs\ImportBillingData;
 use App\Repositories\BillingRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Storage;
 
 class BillingController extends Controller
 {
@@ -69,17 +73,10 @@ class BillingController extends Controller
         /** @var Billing $billing */
         $billing = auth()->user()->billings()->create($request->validated());
 
-        try {
-            $this->billingDataImporter->setBillingData($billing, $request->import_file);
-        } catch (\PhpOffice\PhpSpreadsheet\Reader\Exception $e) {
-            return redirect()->route('billings.index')->with('error', __('app.import.readerError'));
-        } catch (\PhpOffice\PhpSpreadsheet\Exception $e) {
-            return redirect()->route('billings.index')->with('error', __('app.import.spreadsheetError'));
-        }
+        $path = $request->file('import_file')->store('billings');
+        ImportBillingData::dispatch($billing, $path);
 
-        $this->billing->saveBillingData($billing);
-
-        return redirect()->route('billings.index')->with('success', __('app.billings.added'));
+        return redirect()->route('billings.index')->with('success', __('app.billing.queued'));
     }
 
     /**
@@ -116,7 +113,7 @@ class BillingController extends Controller
     {
         $validatedData = $request->validated();
         if ($billing->update($validatedData)){
-            return redirect()->route('billings.index')->with('success', __('app.billings.edited'));
+            return redirect()->route('billings.index')->with('success', __('app.billing.edited'));
         }
         return redirect()->route('billings.index')->with('error', __('app.general.error'));
     }
@@ -131,7 +128,7 @@ class BillingController extends Controller
     public function destroy(Billing $billing): RedirectResponse
     {
         if ($billing->delete()){
-            return redirect()->route('billings.index')->with('success', __('app.billings.deleted'));
+            return redirect()->route('billings.index')->with('success', __('app.billing.deleted'));
         }
         return redirect()->route('billings.index')->with('error', __('app.general.error'));
     }

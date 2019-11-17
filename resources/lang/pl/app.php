@@ -15,10 +15,15 @@ return [
         'error' => 'Coś poszło nie tak. Spróbuj ponownie później lub skontaktuj się z administratorem.'
     ],
 
-    'billings' => [
+    'billing' => [
         'added' => 'Poprawnie dodano billing do bazy',
         'deleted' => 'Popranie usunięto billing z bazy',
-        'edited' => 'Edycja wybranego billingu przebiegła pomyślnie'
+        'edited' => 'Edycja wybranego billingu przebiegła pomyślnie',
+        'queued' => 'Import bilingu został dodany do kolejki'
+    ],
+
+    'billingData' => [
+        'added' => 'Poprawnie zapisano dane bilingu do bazy',
     ],
 
     'import' => [

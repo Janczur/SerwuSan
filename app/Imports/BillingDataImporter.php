@@ -19,7 +19,6 @@ class BillingDataImporter
      */
     public function setBillingData(Billing $billing, UploadedFile $file): void
     {
-        // @todo Testy na całą klasę
         $billingData = $this->getBillingDataToImport($billing, $file);
         /** @var Billing $billing */
         $billing->setRawData($billingData);
@@ -92,7 +91,7 @@ class BillingDataImporter
         foreach($billingData as $row){
             $preparedBilling[] = [
                 'billing_id' => $billing_id,
-                'call_start_date' => Carbon::createFromFormat('Y-m-d H:i:s', $row[0]),
+                'call_start_date' => Carbon::create($row[0]),
                 'call_duration' => $row[6]
             ];
         }

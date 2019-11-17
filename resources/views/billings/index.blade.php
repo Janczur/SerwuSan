@@ -20,6 +20,7 @@
                                 <th scope="col">Opłata za dni robocze</th>
                                 <th scope="col">Opłata za sobotę</th>
                                 <th scope="col">Data utworzenia</th>
+                                <th scope="col">Rozliczenie</th>
                                 <th scope="col">Akcje</th>
                             </tr>
                             </thead>
@@ -34,4 +35,34 @@
         </div>
 
     </div>
+@endsection
+@section('js')
+<script type="text/javascript">
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $(".calculate-settlement").click(function(e){
+        e.preventDefault();
+
+        let $this = $(this);
+        let parent = $(this).parent();
+        let loadingText = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Przeliczam...';
+        let billing_id = $(this).data('billing_id');
+
+        $this.html(loadingText);
+
+        $.ajax({
+            type:'POST',
+            url:'{{ route('billings.calculate.settlement') }}',
+            data:{billing_id:billing_id},
+            success:function(data){
+                $this.remove();
+                parent.html('<strong>' + data.settlement + ' zł</strong>');
+            }
+        });
+    });
+</script>
 @endsection

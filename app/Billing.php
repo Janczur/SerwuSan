@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Imports\BillingDataImporter;
+use App\Helpers\BillingCalculations;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -14,7 +14,7 @@ class Billing extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'owner_id', 'working_days_rate', 'saturday_rate'];
+    protected $fillable = ['name', 'owner_id', 'working_days_rate', 'weekend_rate', 'settlement'];
 
     /**
      * The array of billingData to create from
@@ -54,5 +54,14 @@ class Billing extends Model
     public function setRawData(array $rawData): void
     {
         $this->rawData = $rawData;
+    }
+
+    /**
+     * @return float calculated settlement of billing
+     */
+    public function calculateSettlement(): float
+    {
+        $billingCalculations = new BillingCalculations();
+        return $billingCalculations->calculateSettlement($this);
     }
 }

@@ -48,12 +48,12 @@
                             </div>
                             <div class="col">
                                 <div class="form-group">
-                                    <label for="saturday_rate">Opłata w sobotę:</label>
+                                    <label for="weekend_rate">Opłata w weekend:</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">zł</span>
                                         </div>
-                                        <input class="form-control" id="saturday_rate" value="{{ $billing->saturday_rate }}" readonly>
+                                        <input class="form-control" id="weekend_rate" value="{{ $billing->weekend_rate }}" readonly>
                                     </div>
                                 </div>
                             </div>

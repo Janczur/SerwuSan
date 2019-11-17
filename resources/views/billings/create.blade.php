@@ -40,14 +40,14 @@
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
-                                        <label for="saturday_rate">Opłata za minutę połączenia w sobotę</label>
+                                        <label for="weekend_rate">Opłata za minutę połączenia w weekend</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">zł</span>
                                             </div>
-                                            <input type="number" max="1" min="0" step="0.0001" class="form-control @error('saturday_rate') is-invalid @enderror"
-                                                   id="saturday_rate" name="saturday_rate" placeholder="Na przykład: 0,013" value="0.018" required>
-                                            @error('working_days_rate')
+                                            <input type="number" max="1" min="0" step="0.0001" class="form-control @error('weekend_rate') is-invalid @enderror"
+                                                   id="weekend_rate" name="weekend_rate" placeholder="Na przykład: 0,013" value="0.018" required>
+                                            @error('weekend_rate')
                                             <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>

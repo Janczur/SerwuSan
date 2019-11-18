@@ -6,3 +6,8 @@ $(":file").filestyle({
     placeholder: "Upuść plik tutaj lub wybierz",
     text: "Wybierz plik"
 });
+
+// init tolltip
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})

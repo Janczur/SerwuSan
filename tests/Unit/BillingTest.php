@@ -25,7 +25,10 @@ class BillingTest extends TestCase
     /** @test */
     public function settlement_is_calculated_correctly(): void
     {
-        $billing = factory(Billing::class)->create();
+        $billing = factory(Billing::class)->create([
+            'working_days_rate' => 0.0191,
+            'weekend_rate' => 0.018
+        ]);
         $billingData = new Collection([
             factory(BillingData::class)->make(['call_start_date' => '2019-11-12 08:00:00', 'call_duration' => 231445]), //wtorek
             factory(BillingData::class)->make(['call_start_date' => '2019-10-17 18:00:01', 'call_duration' => 942352]), //czwartek

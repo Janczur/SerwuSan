@@ -6,10 +6,29 @@
     <td>{{ $billing->created_at }}</td>
     <td>
         @if($billing->settlement)
-            <strong>{{ $billing->settlement }} zł</strong>
+            <button class="btn btn-sm btn-success btn-icon-split calculate-settlement"
+                    data-toggle="tooltip" data-placement="top" title="Kliknij aby przeliczyć"
+                    data-billing_id="{{ $billing->id }}">
+                <span class="text">{{ $billing->settlement }}</span>
+                <span class="icon text-white-50">zł</span>
+            </button>
+        @elseif($billing->imported)
+            <button class="btn btn-sm btn-primary btn-icon-split calculate-settlement"
+                    data-billing_id="{{ $billing->id }}"
+                    data-toggle="tooltip" data-placement="left" title="Kliknij aby przeliczyć">
+                <span class="icon text-white-50">
+                    <i class="fas fa-calculator fa-sm text-white-50"></i>
+                </span>
+                <span class="text">Przelicz</span>
+            </button>
         @else
-            <button class="btn btn-sm btn-primary calculate-settlement" data-billing_id="{{ $billing->id }}">
-                <i class="fas fa-coins fa-sm text-white-50"></i> Przelicz
+            <button class="btn btn-sm btn-warning btn-icon-split"
+                    data-toggle="tooltip" data-placement="left" title="Kliknij aby odświeżyć stronę i sprawdzić czy dane się już zaimportowały"
+                    onclick="location.reload()">
+                <span class="icon text-white-50">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                </span>
+                <span class="text">Importowanie...</span>
             </button>
         @endif
     </td>

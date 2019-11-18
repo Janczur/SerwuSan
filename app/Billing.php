@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Helpers\BillingCalculations;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -14,7 +15,7 @@ class Billing extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'owner_id', 'working_days_rate', 'weekend_rate', 'settlement'];
+    protected $fillable = ['name', 'owner_id', 'working_days_rate', 'weekend_rate', 'settlement', 'imported'];
 
     /**
      * The array of billingData to create from
@@ -63,5 +64,13 @@ class Billing extends Model
     {
         $billingCalculations = new BillingCalculations();
         return $billingCalculations->calculateSettlement($this);
+    }
+
+    /**
+     * @return Collection
+     */
+    public function saveBillingData(): Collection
+    {
+        return $this->billingData()->createMany($this->rawData);
     }
 }

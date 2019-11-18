@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Repositories;
-
 
 use App\Billing;
 use Illuminate\Database\Eloquent\Collection;
@@ -19,17 +17,6 @@ class BillingRepository
     public function __construct(Billing $billing)
     {
         $this->billing = $billing;
-    }
-
-    /**
-     * @param Billing $billing
-     * @return Collection
-     */
-    public function saveBillingData(Billing $billing): Collection
-    {
-        /** @var  Billing $billing */
-        $rawData = $billing->getRawData();
-        return $billing->billingData()->createMany($rawData);
     }
 
     /**

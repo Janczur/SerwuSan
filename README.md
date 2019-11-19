@@ -49,7 +49,7 @@ comming soon
 <!-- GETTING STARTED -->
 ## Getting Started
 
-To install the application locally you will need:
+To install the application you will need:
 
 * PHP >= 7.1.3
 * git
@@ -57,16 +57,16 @@ To install the application locally you will need:
 
 ### Installation
 
-1. Clone the repo
+1. Go to the folder where you want to create the project and clone the repository
 ```sh
 git clone https://github.com/StBlackJesus/SerwuSan.git
 ```
-2. Install dependencies
+2. Install application and dependencies
 ```sh
 composer install
 ```
-3. Connect your database
-rename ".env.example" file to ".env" and porovide valid credentials
+3. Connect your database  
+rename ".env.example" file to ".env" and provide valid credentials
 ```sh
 DB_DATABASE=your_database_name
 DB_USERNAME=username
@@ -79,11 +79,10 @@ php artisan migrate
 
 ### Testing
 
-To test if everything is working properly, just run
+In the main project directory run command, and make sure everything is green :smile:
 ```sh
-php phpunit
+php vendor/phpunit/phpunit/phpunit
 ```
-in the project directory and make sure everything is green :smile:
 
 <!-- CONTRIBUTING -->
 ## Contributing

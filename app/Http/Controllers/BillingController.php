@@ -48,7 +48,7 @@ class BillingController extends Controller
      */
     public function index(): View
     {
-        $billings = auth()->user()->billings()->get();
+        $billings = auth()->user()->billings()->latest()->get();
         return view('billings.index', compact('billings'));
     }
 

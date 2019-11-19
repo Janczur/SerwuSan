@@ -13,12 +13,6 @@ class BillingCalculations
     /** @var string the time from which we stop charging money */
     private const TO_TIME = '18:00:00';
 
-    /** @var float fee for one minute of conversation on business days */
-    private const WORKING_DAYS_RATE = 0.0191;
-
-    /** @var float fee for one minute of conversation during the weekend */
-    private const WEEKEND_RATE = 0.018;
-
     /**
      * @param Billing $billing
      * @return float
@@ -40,8 +34,8 @@ class BillingCalculations
         $totalWorkingDaysMinutes = $totalWorkingDaysCallDuration / 60;
         $totalWeekendMinutes = $totalWeekendCallDuration / 60;
 
-        $workingDaysPayment = $totalWorkingDaysMinutes * self::WORKING_DAYS_RATE;
-        $weekendPayment = $totalWeekendMinutes * self::WEEKEND_RATE;
+        $workingDaysPayment = $totalWorkingDaysMinutes * $billing->working_days_rate;
+        $weekendPayment = $totalWeekendMinutes * $billing->weekend_rate;
 
         $totalPayment = $workingDaysPayment + $weekendPayment;
 

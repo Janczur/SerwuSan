@@ -3,10 +3,12 @@
 namespace Tests\Feature;
 
 use App\Billing;
+use App\Events\BillingHasBeenUpdated;
+use App\Events\UpdatingBilling;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Facades\Tests\Setup\BillingFactory;
-use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 
 class ManageBillingsTest extends TestCase
@@ -172,5 +174,25 @@ class ManageBillingsTest extends TestCase
         $response->assertJson([
             'calculated' => true
         ]);
+    }
+
+    /** @test */
+    public function updating_the_billing_resets_its_settlement(): void
+    {
+        Event::fake();
+
+        $billing = BillingFactory::create();
+        $attributes = [
+            'name' => $this->faker->sentence(4),
+            'working_days_rate' => $this->faker->randomFloat(4, 0, 1),
+            'weekend_rate' => $this->faker->randomFloat(4, 0, 1),
+        ];
+
+        $this->actingAs($billing->owner)
+            ->patch(route('billings.update', $billing), $attributes)
+            ->assertRedirect(route('billings.index'))
+            ->assertSessionHas('success');
+
+        Event::assertDispatched(UpdatingBilling::class);
     }
 }

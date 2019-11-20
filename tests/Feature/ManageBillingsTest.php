@@ -3,12 +3,12 @@
 namespace Tests\Feature;
 
 use App\Billing;
-use App\Events\BillingHasBeenUpdated;
 use App\Events\UpdatingBilling;
+use App\Jobs\ImportBillingData;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Facades\Tests\Setup\BillingFactory;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
 class ManageBillingsTest extends TestCase
@@ -18,7 +18,7 @@ class ManageBillingsTest extends TestCase
     /** @test */
     public function guest_cannot_manage_billings(): void
     {
-        $billing = BillingFactory::create();
+        $billing = factory(Billing::class)->create();
 
         $this->get(route('billings.index'))->assertRedirect('login');
         $this->get(route('billings.create'))->assertRedirect('login');
@@ -50,6 +50,23 @@ class ManageBillingsTest extends TestCase
 
         unset($attributes['import_file']);
         $this->assertDatabaseHas('billings', $attributes);
+    }
+
+    /** @test */
+    public function creating_billing_is_queueing_file_importing_job(): void
+    {
+        Queue::fake();
+        $this->signIn();
+        $file = $this->getTestFile();
+        $attributes = [
+            'name' => $this->faker->sentence(4),
+            'working_days_rate' => $this->faker->randomFloat(4, 0, 1),
+            'weekend_rate' => $this->faker->randomFloat(4, 0, 1),
+            'import_file' => $file
+        ];
+        $this->post(route('billings.store'), $attributes);
+
+        Queue::assertPushed(ImportBillingData::class);
     }
 
     /** @test */
@@ -85,7 +102,7 @@ class ManageBillingsTest extends TestCase
     /** @test */
     public function an_authenticated_user_can_view_his_billing(): void
     {
-        $billing = BillingFactory::create();
+        $billing = factory(Billing::class)->create();
 
         $this->actingAs($billing->owner)
             ->get(route('billings.show', $billing))
@@ -97,7 +114,7 @@ class ManageBillingsTest extends TestCase
     /** @test */
     public function an_authenticated_user_can_update_his_billing(): void
     {
-        $billing = BillingFactory::create();
+        $billing = factory(Billing::class)->create();
 
         $this->actingAs($billing->owner)
             ->get(route('billings.edit', $billing))
@@ -119,9 +136,29 @@ class ManageBillingsTest extends TestCase
 
 
     /** @test */
+    public function updating_the_billing_is_firing_update_event(): void
+    {
+        Event::fake();
+
+        $billing = factory(Billing::class)->create();
+        $attributes = [
+            'name' => $this->faker->sentence(4),
+            'working_days_rate' => $this->faker->randomFloat(4, 0, 1),
+            'weekend_rate' => $this->faker->randomFloat(4, 0, 1),
+        ];
+
+        $this->actingAs($billing->owner)
+            ->patch(route('billings.update', $billing), $attributes);
+
+        Event::assertDispatched(UpdatingBilling::class, static function ($event) use ($billing, $attributes){
+            return $billing->is($event->billing) && $event->attributes === $attributes;
+        });
+    }
+
+    /** @test */
     public function an_authenticated_user_can_delete_their_billing(): void
     {
-        $billing = BillingFactory::create();
+        $billing = factory(Billing::class)->create();
 
         $this->actingAs($billing->owner)
             ->delete(route('billings.destroy', $billing))
@@ -135,7 +172,7 @@ class ManageBillingsTest extends TestCase
     public function an_authenticated_user_cannot_view_the_billings_of_others(): void
     {
         $this->signIn();
-        $billing = BillingFactory::create();
+        $billing = factory(Billing::class)->create();
         $this->get(route('billings.show', $billing))
             ->assertStatus(403);
     }
@@ -144,7 +181,7 @@ class ManageBillingsTest extends TestCase
     public function an_authenticated_user_cannot_destroy_the_billings_of_others(): void
     {
         $this->signIn();
-        $billing = BillingFactory::create();
+        $billing = factory(Billing::class)->create();
         $this->delete(route('billings.destroy', $billing))
             ->assertStatus(403);
     }
@@ -153,7 +190,7 @@ class ManageBillingsTest extends TestCase
     public function an_authenticated_user_can_see_only_his_billings(): void
     {
         $this->signIn();
-        $billing = BillingFactory::create();
+        $billing = factory(Billing::class)->create();
 
         $this->get(route('billings.index'))
             ->assertViewMissing($billing->name);
@@ -162,7 +199,7 @@ class ManageBillingsTest extends TestCase
     /** @test */
     public function an_authenticated_user_can_calculate_settlement_of_his_billing(): void
     {
-        $billing = BillingFactory::create();
+        $billing = factory(Billing::class)->create();
 
         $this->actingAs($billing->owner)
             ->get(route('billings.index'))
@@ -174,25 +211,5 @@ class ManageBillingsTest extends TestCase
         $response->assertJson([
             'calculated' => true
         ]);
-    }
-
-    /** @test */
-    public function updating_the_billing_resets_its_settlement(): void
-    {
-        Event::fake();
-
-        $billing = BillingFactory::create();
-        $attributes = [
-            'name' => $this->faker->sentence(4),
-            'working_days_rate' => $this->faker->randomFloat(4, 0, 1),
-            'weekend_rate' => $this->faker->randomFloat(4, 0, 1),
-        ];
-
-        $this->actingAs($billing->owner)
-            ->patch(route('billings.update', $billing), $attributes)
-            ->assertRedirect(route('billings.index'))
-            ->assertSessionHas('success');
-
-        Event::assertDispatched(UpdatingBilling::class);
     }
 }

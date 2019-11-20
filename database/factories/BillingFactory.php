@@ -12,7 +12,9 @@ $factory->define(Billing::class, function (Faker $faker) {
         'name' => $this->faker->sentence(4),
         'working_days_rate' => $this->faker->randomFloat(4, 0, 1),
         'weekend_rate' => $this->faker->randomFloat(4, 0, 1),
-        'owner_id' => function (){
+        'settlement' => $this->faker->randomFloat(4, 0, 1),
+        'imported' => 0,
+        'owner_id' => static function (){
             return factory(User::class)->create()->id;
         }
     ];

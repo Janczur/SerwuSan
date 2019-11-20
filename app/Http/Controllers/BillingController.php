@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Billing;
+use App\Events\BillingHasBeenUpdated;
+use App\Events\UpdatingBilling;
 use App\Http\Requests\StoreBilling;
 use App\Http\Requests\UpdateBilling;
 use App\Imports\BillingDataImporter;
@@ -65,6 +67,7 @@ class BillingController extends Controller
     /**
      * Store a newly created billing in database.
      *
+     *
      * @param StoreBilling $request
      * @return RedirectResponse
      */
@@ -112,6 +115,7 @@ class BillingController extends Controller
     public function update(UpdateBilling $request, Billing $billing): RedirectResponse
     {
         $validatedData = $request->validated();
+        UpdatingBilling::dispatch($billing, $validatedData);
         if ($billing->update($validatedData)){
             return redirect()->route('billings.index')->with('success', __('app.billing.edited'));
         }

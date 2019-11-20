@@ -1,21 +1,22 @@
 <tr>
     <th scope="row">{{ $billing->id }}</th>
-    <td><a href="{{ route('billings.show', $billing) }}">{{ $billing->name }}</a></td>
+    <td><a href="{{ route('billings.show', $billing) }}">{{ $billing->name }} »</a></td>
     <td>{{ $billing->working_days_rate }}</td>
     <td>{{ $billing->weekend_rate }}</td>
-    <td>{{ $billing->created_at }}</td>
+    <td>
+        <span data-toggle="tooltip" data-placement="left" title="{{ $billing->created_at }}">
+            {{ $billing->created_at->diffForHumans() }}
+        </span>
+    </td>
     <td>
         @if($billing->settlement)
-            <button class="btn btn-sm btn-success btn-icon-split calculate-settlement"
-                    data-toggle="tooltip" data-placement="top" title="Kliknij aby przeliczyć"
-                    data-billing_id="{{ $billing->id }}">
+            <div class="btn btn-sm btn-success btn-icon-split">
                 <span class="text">{{ $billing->settlement }}</span>
                 <span class="icon text-white-50">zł</span>
-            </button>
+            </div>
         @elseif($billing->imported)
             <button class="btn btn-sm btn-primary btn-icon-split calculate-settlement"
-                    data-billing_id="{{ $billing->id }}"
-                    data-toggle="tooltip" data-placement="left" title="Kliknij aby przeliczyć">
+                    data-billing_id="{{ $billing->id }}">
                 <span class="icon text-white-50">
                     <i class="fas fa-calculator fa-sm text-white-50"></i>
                 </span>
@@ -36,7 +37,9 @@
         <form method="POST" action="{{ route('billings.destroy', $billing) }}">
             @csrf
             @method('DELETE')
-            <button type="submit" class="btn btn-sm btn-danger">Usuń</button>
+            <button type="submit"
+                    onclick="return confirm('Czy na pewno chcesz usunąć ten biling?')"
+                    class="btn btn-sm btn-danger">Usuń</button>
         </form>
     </td>
 </tr>

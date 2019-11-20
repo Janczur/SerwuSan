@@ -23,9 +23,11 @@
             url:'{{ route('billings.calculate.settlement') }}',
             data:{billing_id:billing_id},
             success:function(data){
-                $this.removeClass('btn-primary').addClass('btn-success');
-                $this.html('<span class="text">' + data.settlement +'</span>' +
-                    '<span class="icon text-white-50">zł</span>');
+                $this.remove();
+                parent.html('<div class="btn btn-sm btn-success btn-icon-split">' +
+                    '   <span class="text">' + data.settlement +'</span>' +
+                    '   <span class="icon text-white-50">zł</span>' +
+                    '</div>');
             }
         });
     });

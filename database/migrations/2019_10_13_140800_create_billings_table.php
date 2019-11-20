@@ -17,8 +17,8 @@ class CreateBillingsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('owner_id');
             $table->string('name');
-            $table->decimal('working_days_rate', 5, 5);
-            $table->decimal('weekend_rate', 5, 5);
+            $table->decimal('working_days_rate', 4, 4);
+            $table->decimal('weekend_rate', 4, 4);
             $table->decimal('settlement', 8, 2)->nullable();
             $table->boolean('imported')->default(false);
             $table->timestamps();

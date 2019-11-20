@@ -11,6 +11,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class ImportBillingData implements ShouldQueue
 {
@@ -61,15 +62,14 @@ class ImportBillingData implements ShouldQueue
 
         try {
             $billingDataImporter->setBillingData($this->billing, $file);
+            $this->billing->saveBillingData();
+            $this->billing->update(['imported' => true]);
+            Log::info(__('app.billingData.added'));
         } catch (\PhpOffice\PhpSpreadsheet\Reader\Exception $e) {
-            logger(__('app.import.readerError'));
+            Log::error(__('app.import.readerError'));
         } catch (\PhpOffice\PhpSpreadsheet\Exception $e) {
-            logger(__('app.import.spreadsheetError'));
+            Log::error(__('app.import.spreadsheetError'));
         }
-
-        $this->billing->saveBillingData();
-        $this->billing->update(['imported' => true]);
-        logger(__('app.billingData.added'));
 
         Storage::delete($this->path);
     }

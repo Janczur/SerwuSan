@@ -18,7 +18,7 @@ class BillingTest extends TestCase
     /** @test */
     public function a_billing_belongs_to_an_owner(): void
     {
-        $billing = BillingFactory::create();
+        $billing = factory(Billing::class)->create();
         $this->assertInstanceOf(User::class, $billing->owner);
     }
 

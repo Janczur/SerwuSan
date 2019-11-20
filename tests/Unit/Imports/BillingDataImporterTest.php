@@ -4,8 +4,7 @@ namespace Tests\Unit;
 
 use App\Imports\BillingDataImporter;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Facades\Tests\Setup\BillingFactory;
+use App\Billing;
 use Tests\TestCase;
 
 class BillingDataImporterTest extends TestCase
@@ -19,7 +18,7 @@ class BillingDataImporterTest extends TestCase
     public function uploaded_file_content_is_set_to_the_billing(): void
     {
         $file = $this->getTestFile();
-        $billing = BillingFactory::create();
+        $billing = factory(Billing::class)->create();
 
         $billingDataImporter = new BillingDataImporter();
         $billingDataImporter->setBillingData($billing, $file);

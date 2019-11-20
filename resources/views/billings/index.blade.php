@@ -19,7 +19,7 @@
                                 <th scope="col">Nazwa billingu</th>
                                 <th scope="col">Opłata za dni robocze</th>
                                 <th scope="col">Opłata za sobotę</th>
-                                <th scope="col">Data utworzenia</th>
+                                <th scope="col">Utworzono</th>
                                 <th scope="col">Rozliczenie</th>
                                 <th scope="col">Akcje</th>
                             </tr>

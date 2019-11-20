@@ -29,7 +29,7 @@ class ResetBillingSettlementTest extends TestCase
     }
 
     /** @test */
-    public function it_does_not_reset_billing_if_rates_have_not_changed(): void
+    public function it_does_not_reset_billing_settlement_if_rates_have_not_changed(): void
     {
         $randomSettlement = $this->faker->randomFloat(2, 0, 100);
         $billing = factory(Billing::class)->create([

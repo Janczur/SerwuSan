@@ -19,11 +19,13 @@ return [
         'added' => 'Poprawnie dodano billing do bazy',
         'deleted' => 'Popranie usunięto billing z bazy',
         'edited' => 'Edycja wybranego billingu przebiegła pomyślnie',
-        'queued' => 'Import bilingu został dodany do kolejki'
+        'queued' => 'Import bilingu został dodany do kolejki. Proces powinien potrawać od kilku do kilkunastu sekund'
     ],
 
     'billingData' => [
         'added' => 'Poprawnie zapisano dane bilingu do bazy',
+        'imported' => 'Dane bilingu zostały przetworzone i przygotowane do zapisu popranie',
+        'error' => 'Przy próbie zapisu danych do bilingu wystąpił błąd',
     ],
 
     'import' => [

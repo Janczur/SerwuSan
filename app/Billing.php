@@ -3,7 +3,6 @@
 namespace App;
 
 use App\Helpers\BillingCalculations;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -40,7 +39,6 @@ class Billing extends Model
         return $this->hasMany(BillingData::class);
     }
 
-
     /**
      * @return array
      */
@@ -67,10 +65,16 @@ class Billing extends Model
     }
 
     /**
-     * @return Collection
+     * divide the data to be saved into chunks of 10,000 records so that the SQL does not explode or reject insert
+     *
+     * @return bool
      */
-    public function saveBillingData(): Collection
+    public function saveBillingData(): bool
     {
-        return $this->billingData()->createMany($this->rawData);
+        $chunkedData = array_chunk($this->rawData, 10000);
+        foreach ($chunkedData as $data){
+            BillingData::insert($data);
+        }
+        return true;
     }
 }

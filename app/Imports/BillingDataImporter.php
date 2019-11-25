@@ -6,7 +6,6 @@ use App\Billing;
 use Illuminate\Http\UploadedFile;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use App\Imports\Filters\BillingDataReadFilter;
-use Carbon\Carbon;
 use PhpOffice\PhpSpreadsheet\Reader\IReader;
 
 class BillingDataImporter
@@ -91,7 +90,7 @@ class BillingDataImporter
         foreach($billingData as $row){
             $preparedBilling[] = [
                 'billing_id' => $billing_id,
-                'call_start_date' => Carbon::create($row[0]),
+                'call_start_date' => $row[0],
                 'call_duration' => $row[6]
             ];
         }

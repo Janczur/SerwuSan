@@ -1,22 +1,13 @@
 <!-- PROJECT LOGO -->
 <br />
-<p align="center">
+<div align="center">
 
   <h1 align="center">SerwuSan</h1>
 
   <p align="center">
     An application supporting the work of a telecommunications company
-    <br />
-    <a href="#"><strong>Dokumentacja »</strong></a>
-    <br />
-    <br />
-    <a href="#">View Demo</a>
-    ·
-    <a href="#">Report Bug</a>
-    ·
-    <a href="#">Request Feature</a>
   </p>
-</p>
+</div>
 
 
 
@@ -37,7 +28,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-comming soon
+The application was created to accelerate the operation of a telecommunications company. Currently, it only helps in calculating the amount to be paid for monthly billings from a csv file.
 
 ### Built With
 * [Bootstrap](https://getbootstrap.com)

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Billing;
-use App\Events\BillingHasBeenUpdated;
 use App\Events\UpdatingBilling;
 use App\Http\Requests\StoreBilling;
 use App\Http\Requests\UpdateBilling;
@@ -13,10 +12,7 @@ use App\Repositories\BillingRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\View\View;
-use Illuminate\Support\Facades\Storage;
 
 class BillingController extends Controller
 {

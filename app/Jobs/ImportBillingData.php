@@ -62,13 +62,18 @@ class ImportBillingData implements ShouldQueue
 
         try {
             $billingDataImporter->setBillingData($this->billing, $file);
-            $this->billing->saveBillingData();
-            $this->billing->update(['imported' => true]);
-            Log::info(__('app.billingData.added'));
+            Log::info(__('app.billingData.imported'));
         } catch (\PhpOffice\PhpSpreadsheet\Reader\Exception $e) {
             Log::error(__('app.import.readerError'));
         } catch (\PhpOffice\PhpSpreadsheet\Exception $e) {
             Log::error(__('app.import.spreadsheetError'));
+        }
+
+        if ($this->billing->saveBillingData()){
+            $this->billing->update(['imported' => true]);
+            Log::info(__('app.billingData.added'));
+        }else{
+            Log::info(__('app.billingData.error'));
         }
 
         Storage::delete($this->path);

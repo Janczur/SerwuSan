@@ -26,7 +26,7 @@ class ManageBillingsTest extends TestCase
         $this->post(route('billings.store'), $billing->toArray())->assertRedirect('login');
         $this->get(route('billings.edit', $billing))->assertRedirect('login');
         $this->patch(route('billings.update', $billing))->assertRedirect('login');
-        $this->post(route('billings.destroy', $billing->toArray()))->assertRedirect('login');
+        $this->delete(route('billings.destroy', $billing))->assertRedirect('login');
     }
 
 

@@ -17,7 +17,7 @@ class CreateBillingsDataTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedInteger('billing_id');
             $table->timestamp('call_start_date');
-            $table->smallInteger('call_duration');
+            $table->integer('call_duration');
 
             $table->foreign('billing_id')->references('id')->on('billings')->onDelete('cascade');
         });

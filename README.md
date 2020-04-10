@@ -42,7 +42,7 @@ The application was created to accelerate the operation of a telecommunications 
 
 To install the application you will need:
 
-* PHP >= 7.1.3
+* PHP >= 7.3
 * git
 * composer
 

@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Błąd 404 - strony nie odnaleziono')
 @section('content')
     <!-- Begin Page Content -->
     <div class="container-fluid">

@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('title')
+    Edycja billingu: {{ $billing->name }}
+@endsection
 @section('content')
     <div class="container-fluid">
 

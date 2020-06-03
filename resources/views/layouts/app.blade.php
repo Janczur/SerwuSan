@@ -12,9 +12,11 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
     <link rel="stylesheet" href="{{ asset('css/sb-admin-2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/jquery.toast.min.css') }}">
+    @stack('styles')
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
 
-    <title>{{ config('app.name') }}</title>
+    <title>@yield('title') | {{ config('app.name') }}</title>
 </head>
 <body class="bg-gradient-primary">
     <!-- Page Wrapper -->
@@ -27,7 +29,7 @@
             <!-- Main Content -->
             <div id="content">
                 @include('layouts.modules.topbar')
-                @include('layouts.modules.flash-messages')
+                @include('layouts.modules.flash-messages-js')
                 @yield('content')
             </div>
             <!-- End of Main Content -->
@@ -53,7 +55,10 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap-filestyle.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.toast.min.js ') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
+    @include('layouts.modules.flash-messages-js')
+    @stack('scripts')
     @yield('js')
 </body>
 </html>

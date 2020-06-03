@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Dodaj billing')
 @section('content')
     <div class="container-fluid">
 

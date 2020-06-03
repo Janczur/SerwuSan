@@ -1,0 +1,11 @@
+/* Custom toast notification colors */
+.jq-icon-success{background-color: #1cc88a;}
+.jq-icon-success .jq-toast-loader{background-color: #169b6b !important;}
+.jq-icon-warning{background-color: #f6c23e;}
+.jq-icon-warning .jq-toast-loader{background-color: #f4b619 !important;}
+.jq-icon-error{background-color: #e74a3b;}
+.jq-icon-error .jq-toast-loader{background-color: #e02d1b !important;}
+
+table.dataTable tbody>tr.selected, table.dataTable tbody>tr>.selected{background-color: #6987df;color: #fff;}
+.dataTables_wrapper .dataTables_length {margin: 3px 0 0 7px;}
+.btn.disabled, .btn:disabled{cursor: not-allowed}

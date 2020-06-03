@@ -11,3 +11,9 @@ $(":file").filestyle({
 $(function () {
     $('[data-toggle="tooltip"]').tooltip()
 })
+
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+    }
+});

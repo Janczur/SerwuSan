@@ -12,7 +12,13 @@ return [
     */
 
     'general' => [
-        'error' => 'Coś poszło nie tak. Spróbuj ponownie później lub skontaktuj się z administratorem.'
+        'success' => 'Sukces!',
+        'error' => 'Coś poszło nie tak. Spróbuj ponownie później lub skontaktuj się z administratorem.',
+        'confirm' => 'Na pewno chcesz to zrobić?',
+        'batch' => [
+            'deleteConfirm' => 'Czy na pewno chcesz usunąć wybrane pozycje?',
+            'delete' => 'Wybrane pozycje zostały usunięte'
+        ]
     ],
 
     'billing' => [
@@ -23,9 +29,18 @@ return [
     ],
 
     'billingData' => [
-        'added' => 'Poprawnie zapisano dane bilingu do bazy',
-        'imported' => 'Dane bilingu zostały przetworzone i przygotowane do zapisu popranie',
+        'added' => 'Zapisano dane bilingu do bazy',
+        'imported' => 'Dane bilingu zostały przetworzone i przygotowane do zapisu',
         'error' => 'Przy próbie zapisu danych do bilingu wystąpił błąd',
+    ],
+
+    'providers' => [
+        'margin' => [
+            'added' => 'Marże dostawców zostały zapisane',
+            'updated' => 'Marże dostawców zostały zaktualizowane',
+            'emptyDB' => 'Nie ma czego usuwać',
+            'truncated' => 'Wszystkie marże dostawców zostały usunięte'
+        ],
     ],
 
     'import' => [

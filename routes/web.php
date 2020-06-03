@@ -21,7 +21,22 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('/', 'HomeController@index')->name('home');
 
     Route::resource('billings', 'BillingController');
-    Route::post('billings/calculate/settlement', 'BillingController@calculatesettlement')->name('billings.calculate.settlement');
+    Route::post('billings/calculate/settlement', 'BillingController@calculatesettlement')
+        ->name('billings.calculate.settlement');
+
+    Route::prefix('providersMargins')->name('providersMargins.')->group(function (){
+
+        Route::get('/', 'ProviderMarginController@index')->name('index');
+        Route::get('/import', 'ProviderMarginController@import')->name('import');
+        Route::post('/', 'ProviderMarginController@store')->name('store');
+        Route::delete('batch/delete', 'ProviderMarginController@batchDelete')->name('batch.delete');
+
+        Route::prefix('editable')->name('editable.')->group(function () {
+            Route::put('country/{providerMargin}', 'ProviderMarginController@editableUpdateCountry')->name('update.country');
+            Route::put('margin/{providerMargin}', 'ProviderMarginController@editableUpdateMargin')->name('update.margin');
+        });
+
+    });
 });
 
 

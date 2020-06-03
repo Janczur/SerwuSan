@@ -22,16 +22,30 @@
     <!-- Divider -->
     <hr class="sidebar-divider">
 
-    <!-- Heading -->
-    <div class="sidebar-heading">
-        Administracja
-    </div>
-
     <!-- Nav Item -->
     <li class="nav-item">
         <a class="nav-link" href="{{ route('billings.index') }}">
             <i class="fas fa-fw fa-tty"></i>
             <span>Billingi</span></a>
+    </li>
+
+    <!-- Nav Item - Utilities Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#"
+           data-toggle="collapse" data-target="#providersNav" aria-expanded="true" aria-controls="providersNav">
+            <i class="fas fa-fw fa-globe-europe"></i>
+            <span>Dostawcy</span>
+        </a>
+        <div id="providersNav" class="collapse" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="{{ route('providersMargins.index') }}">
+                    <i class="fas fa-fw fa-hand-holding-usd"></i> Marże
+                </a>
+                <a class="collapse-item" href="#">
+                    <i class="fas fa-fw fa-money-bill-wave"></i> Cennik
+                </a>
+            </div>
+        </div>
     </li>
 
     <!-- Nav Item - Utilities Collapse Menu -->

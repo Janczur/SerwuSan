@@ -7,5 +7,8 @@
 .jq-icon-error .jq-toast-loader{background-color: #e02d1b !important;}
 
 table.dataTable tbody>tr.selected, table.dataTable tbody>tr>.selected{background-color: #6987df;color: #fff;}
-.dataTables_wrapper .dataTables_length {margin: 3px 0 0 7px;}
+.dataTables_length,.dataTables_filter {
+    margin-left: 10px;
+    float: right;
+}
 .btn.disabled, .btn:disabled{cursor: not-allowed}

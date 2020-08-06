@@ -5,7 +5,6 @@ namespace App\Repositories;
 
 
 use App\ProvidersMargin;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
 class ProviderMarginRepository
@@ -29,6 +28,14 @@ class ProviderMarginRepository
     public function getAll(): Collection
     {
         return $this->providerMargin->get();
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getCountryWithMargin(): Collection
+    {
+        return $this->providerMargin->pluck('margin', 'country');
     }
 
     /**

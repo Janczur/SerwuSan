@@ -41,7 +41,7 @@
                 <a class="collapse-item" href="{{ route('providersMargins.index') }}">
                     <i class="fas fa-fw fa-hand-holding-usd"></i> Marże
                 </a>
-                <a class="collapse-item" href="#">
+                <a class="collapse-item" href="{{ route('providersPriceLists.index') }}">
                     <i class="fas fa-fw fa-money-bill-wave"></i> Cennik
                 </a>
             </div>

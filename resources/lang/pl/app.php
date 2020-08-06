@@ -23,7 +23,7 @@ return [
 
     'billing' => [
         'added' => 'Poprawnie dodano billing do bazy',
-        'deleted' => 'Popranie usunięto billing z bazy',
+        'deleted' => 'Poprawnie usunięto billing z bazy',
         'edited' => 'Edycja wybranego billingu przebiegła pomyślnie',
         'queued' => 'Import bilingu został dodany do kolejki. Proces powinien potrawać od kilku do kilkunastu sekund'
     ],
@@ -41,6 +41,13 @@ return [
             'emptyDB' => 'Nie ma czego usuwać',
             'truncated' => 'Wszystkie marże dostawców zostały usunięte'
         ],
+        'pricelist' => [
+            'added' => 'Cennik dostawców został dodany pomyślnie',
+            'deleted' => 'Cennik dostawców został usunięty pomyślnie',
+            'calculator' => [
+                'success' => 'Poprawnie obliczono ceny za połączenia'
+            ]
+        ]
     ],
 
     'import' => [

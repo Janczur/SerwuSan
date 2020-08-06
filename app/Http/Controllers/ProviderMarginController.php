@@ -83,17 +83,6 @@ class ProviderMarginController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\ProvidersMargin  $provider
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(ProvidersMargin $provider)
-    {
-        //
-    }
-
-    /**
      * @param BatchDeleteProviderMargin $request
      * @return JsonResponse
      */

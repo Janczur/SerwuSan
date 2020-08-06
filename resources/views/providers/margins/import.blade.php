@@ -1,6 +1,6 @@
 @inject('importStrategies', 'App\Imports\Strategies\ProviderMargin')
 @extends('layouts.app')
-@section('title', 'Aktualizuj cennik')
+@section('title', 'Importuj marżę')
 @section('content')
     <div class="container-fluid">
 

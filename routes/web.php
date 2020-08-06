@@ -37,6 +37,17 @@ Route::group(['middleware' => 'auth'], function (){
         });
 
     });
+
+    Route::prefix('providersPricelists')->name('providersPriceLists.')->group(function (){
+
+        Route::get('/', 'ProviderPriceListController@index')->name('index');
+        Route::get('/import', 'ProviderPriceListController@import')->name('import');
+        Route::post('/store', 'ProviderPriceListController@store')->name('store');
+        Route::get('/{providersPricelist}', 'ProviderPriceListController@show')->name('show');
+        Route::delete('/{providersPricelist}', 'ProviderPriceListController@destroy')->name('destroy');
+        Route::post('/calculateCallPrice', 'ProviderPriceListController@calculateCallPrice')->name('calculateCallPrice');
+
+    });
 });
 
 

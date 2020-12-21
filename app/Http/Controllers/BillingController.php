@@ -69,11 +69,12 @@ class BillingController extends Controller
      */
     public function store(StoreBilling $request): RedirectResponse
     {
-        /** @var Billing $billing */
         $billing = auth()->user()->billings()->create($request->validated());
 
-        $path = $request->file('import_file')->store('billings');
-        ImportBillingData::dispatch($billing, $path);
+        foreach ($request->file('import_files') as $file){
+            $filePaths[] = $file->store('billings');
+        }
+        ImportBillingData::dispatch($billing, $filePaths);
 
         return redirect()->route('billings.index')->with('success', __('app.billing.queued'));
     }

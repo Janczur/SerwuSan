@@ -35,18 +35,18 @@ class ImportBillingData implements ShouldQueue
     private $billing;
 
     /** @var string */
-    private $path;
+    private $files;
 
     /**
      * Create a new job instance.
      *
      * @param Billing $billing
-     * @param string $path
+     * @param array $files
      */
-    public function __construct(Billing $billing, string $path)
+    public function __construct(Billing $billing, array $files)
     {
         $this->billing = $billing;
-        $this->path = $path;
+        $this->files = $files;
     }
 
 
@@ -57,25 +57,28 @@ class ImportBillingData implements ShouldQueue
      */
     public function handle(): void
     {
-        $file = new UploadedFile(storage_path("app/$this->path"), 'billing.csv');
-        $billingDataImporter = new BillingDataImporter();
+        foreach ($this->files as $filepath){
+            $file = new UploadedFile(storage_path("app/$filepath"), 'billing.csv');
+            $billingDataImporter = new BillingDataImporter();
 
-        try {
-            $billingDataImporter->setBillingData($this->billing, $file);
-            Log::info(__('app.billingData.imported'));
-        } catch (\PhpOffice\PhpSpreadsheet\Reader\Exception $e) {
-            Log::error(__('app.import.readerError'));
-        } catch (\PhpOffice\PhpSpreadsheet\Exception $e) {
-            Log::error(__('app.import.spreadsheetError'));
+            try {
+                $billingDataImporter->setBillingData($this->billing, $file);
+                Log::info(__('app.billingData.imported'));
+            } catch (\PhpOffice\PhpSpreadsheet\Reader\Exception $e) {
+                Log::error(__('app.import.readerError'));
+            } catch (\PhpOffice\PhpSpreadsheet\Exception $e) {
+                Log::error(__('app.import.spreadsheetError'));
+            }
+
+            if ($this->billing->saveBillingData()){
+                Log::info(__('app.billingData.added'));
+            }else{
+                Log::info(__('app.billingData.error'));
+            }
+
+            Storage::delete($filepath);
         }
 
-        if ($this->billing->saveBillingData()){
-            $this->billing->update(['imported' => true]);
-            Log::info(__('app.billingData.added'));
-        }else{
-            Log::info(__('app.billingData.error'));
-        }
-
-        Storage::delete($this->path);
+        $this->billing->update(['imported' => true]);
     }
 }

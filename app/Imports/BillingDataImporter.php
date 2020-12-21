@@ -19,7 +19,6 @@ class BillingDataImporter
     public function setBillingData(Billing $billing, UploadedFile $file): void
     {
         $billingData = $this->getBillingDataToImport($billing, $file);
-        /** @var Billing $billing */
         $billing->setRawData($billingData);
     }
 
@@ -35,8 +34,7 @@ class BillingDataImporter
         $filter = $this->getReadFilter();
         $reader = $this->setupReaderWithFilter($filter, 'Csv');
         $loadedBillingData = $this->loadBillingDataToArray($reader, $file);
-        $preparedBillingData = $this->prepareBillingData($billing->id, $loadedBillingData);
-        return $preparedBillingData;
+        return $this->prepareBillingData($billing->id, $loadedBillingData);
     }
 
     /**
@@ -44,7 +42,7 @@ class BillingDataImporter
      */
     private function getReadFilter(): BillingDataReadFilter
     {
-        $columnsToRead = ['A', 'G'];
+        $columnsToRead = ['B', 'G'];
         return new BillingDataReadFilter($columnsToRead);
     }
 
@@ -90,7 +88,7 @@ class BillingDataImporter
         foreach($billingData as $row){
             $preparedBilling[] = [
                 'billing_id' => $billing_id,
-                'call_start_date' => $row[0],
+                'call_start_date' => $row[1],
                 'call_duration' => $row[6]
             ];
         }

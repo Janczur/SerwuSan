@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Billing;
 use App\Events\UpdatingBilling;
+use App\Http\Middleware\VerifyCsrfToken;
 use App\Jobs\ImportBillingData;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -35,20 +36,20 @@ class ManageBillingsTest extends TestCase
     {
         $this->signIn();
         $this->get(route('billings.create'))->assertStatus(200);
-        $file = $this->getTestFile();
+        $files = $this->getTestFiles();
 
         $attributes = [
             'name' => $this->faker->sentence(4),
             'working_days_rate' => $this->faker->randomFloat(4, 0, 1),
             'weekend_rate' => $this->faker->randomFloat(4, 0, 1),
-            'import_file' => $file
+            'import_files' => $files
         ];
 
         $this->post(route('billings.store'), $attributes)
             ->assertRedirect(route('billings.index'))
             ->assertSessionHas('success');
 
-        unset($attributes['import_file']);
+        unset($attributes['import_files']);
         $this->assertDatabaseHas('billings', $attributes);
     }
 
@@ -57,12 +58,12 @@ class ManageBillingsTest extends TestCase
     {
         Queue::fake();
         $this->signIn();
-        $file = $this->getTestFile();
+        $files = $this->getTestFiles();
         $attributes = [
             'name' => $this->faker->sentence(4),
             'working_days_rate' => $this->faker->randomFloat(4, 0, 1),
             'weekend_rate' => $this->faker->randomFloat(4, 0, 1),
-            'import_file' => $file
+            'import_files' => $files
         ];
         $this->post(route('billings.store'), $attributes);
 

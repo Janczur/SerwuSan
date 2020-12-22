@@ -39,6 +39,7 @@ class StoreBilling extends FormRequest
             'working_days_rate' => 'Opłata za dni robocze',
             'weekend_rate' => 'Opłata za sobotę',
             'import_files' => 'Importowane pliki',
+            'import_files.*' => 'Każdy importowany plik'
         ];
     }
 }

@@ -58,10 +58,10 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <input type="file" class="form-control @error('import_files') is-invalid @enderror" name="import_files[]" aria-describedby="import_filesDescription" multiple>
-                                @error('import_files')
+                                <input type="file" class="form-control @error('import_files.*') is-invalid @enderror" name="import_files[]" aria-describedby="import_filesDescription" multiple>
+                                @error('import_files.*')
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                        <strong>{{ $message }} Nie może być również pusty</strong>
                                     </span>
                                 @enderror
                                 <small id="import_filesDescription" class="form-text text-muted">Dozwolone rozszerzenia plików: <strong>*.csv</strong></small>

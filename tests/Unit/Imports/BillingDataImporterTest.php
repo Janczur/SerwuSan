@@ -17,11 +17,13 @@ class BillingDataImporterTest extends TestCase
     /** @test */
     public function uploaded_file_content_is_set_to_the_billing(): void
     {
-        $file = $this->getTestFile();
+        $files = $this->getTestFiles();
         $billing = factory(Billing::class)->create();
 
         $billingDataImporter = new BillingDataImporter();
-        $billingDataImporter->setBillingData($billing, $file);
+        foreach ($files as $file){
+            $billingDataImporter->setBillingData($billing, $file);
+        }
 
         $billingData = $billing->getRawData();
         $lastBillingDataElement = end($billingData);

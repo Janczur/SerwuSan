@@ -28,12 +28,16 @@ abstract class TestCase extends BaseTestCase
     /**
      * Instancing UploadedFile object from test file in storage
      *
-     * @return UploadedFile
+     * @return UploadedFile[]
      */
-    protected function getTestFile(): UploadedFile
+    protected function getTestFiles(): array
     {
         $filename = 'billing-test.csv';
         $path = storage_path('app/public/');
-        return new UploadedFile($path.$filename, $filename, 'text/csv', null, true);
+        $uploadedFile = new UploadedFile($path.$filename, $filename, 'text/csv', null, true);
+        return [
+            $uploadedFile,
+            $uploadedFile
+        ];
     }
 }

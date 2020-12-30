@@ -42,7 +42,7 @@ class BillingDataImporter
      */
     private function getReadFilter(): BillingDataReadFilter
     {
-        $columnsToRead = ['B', 'G'];
+        $columnsToRead = ['A', 'G'];
         return new BillingDataReadFilter($columnsToRead);
     }
 
@@ -88,7 +88,7 @@ class BillingDataImporter
         foreach($billingData as $row){
             $preparedBilling[] = [
                 'billing_id' => $billing_id,
-                'call_start_date' => $row[1],
+                'call_start_date' => $row[0],
                 'call_duration' => $row[6]
             ];
         }
